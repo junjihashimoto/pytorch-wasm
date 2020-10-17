@@ -26,9 +26,12 @@ jobs:
         cd pytorch ; git submodule update --init
     - name: cmake
       run: |
+        source emsdk/emsdk_env.sh
         mkdir pytorch/build
         cd pytorch/build
         emcmake cmake -DCMAKE_BUILD_TYPE=Release -DUSE_NUMA=OFF -DINTERN_BUILD_MOBILE=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_PREFIX_PATH=`pwd`/.. -DPYTHON_EXECUTABLE=/usr/bin/python3 -DFXDIV_SOURCE_DIR=`pwd`/../third_party/FXdiv -DPSIMD_SOURCE_DIR=`pwd`/../third_party/psimdhttps://github.com/Maratyszcza/FXdiv.git ..
     - name: Build
       run: |
+        source emsdk/emsdk_env.sh
+        cd pytorch/build
         emmake make
