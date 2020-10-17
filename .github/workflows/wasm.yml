@@ -15,11 +15,11 @@ jobs:
     - name: Setup emscripten
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
-	cd emsdk
-	git pull
-	./emsdk install latest
-	./emsdk activate latest
-	source ./emsdk_env.sh
+        cd emsdk
+        git pull
+        ./emsdk install latest
+        ./emsdk activate latest
+        source ./emsdk_env.sh
     - name: Setup pytorch
       run: |
         git clone https://github.com/pytorch/pytorch.git
@@ -27,7 +27,7 @@ jobs:
     - name: cmake
       run: |
         mkdir pytorch/build
-	cd pytorch/build
+        cd pytorch/build
         emcmake cmake -DCMAKE_BUILD_TYPE=Release -DUSE_NUMA=OFF -DINTERN_BUILD_MOBILE=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_PREFIX_PATH=`pwd`/.. -DPYTHON_EXECUTABLE=/usr/bin/python3 -DFXDIV_SOURCE_DIR=`pwd`/../third_party/FXdiv -DPSIMD_SOURCE_DIR=`pwd`/../third_party/psimdhttps://github.com/Maratyszcza/FXdiv.git ..
     - name: Build
       run: |
