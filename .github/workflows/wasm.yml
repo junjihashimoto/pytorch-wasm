@@ -24,7 +24,8 @@ jobs:
     - name: Setup pytorch
       run: |
         git clone https://github.com/pytorch/pytorch.git
-        cd pytorch ; git submodule update --init
+        cd pytorch ; git checkout v1.6.0 ; git submodule update --init
+	patch -p1 < ../pytorch.patch
     - name: cmake
       run: |
         source emsdk/emsdk_env.sh
