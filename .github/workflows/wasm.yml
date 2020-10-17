@@ -5,13 +5,14 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
     - name: Setup packages
       run: |
         sudo apt update -qq
         sudo apt -y --allow-downgrades --allow-remove-essential --allow-change-held-packages install python3-pip cmake curl wget unzip git libtinfo-dev python3 python3-yaml
+	python3 -m pip install dataclasses
     - name: Setup emscripten
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
