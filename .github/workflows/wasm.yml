@@ -31,9 +31,16 @@ jobs:
         source emsdk/emsdk_env.sh
         mkdir pytorch/build
         cd pytorch/build
-        emcmake cmake -DCMAKE_BUILD_TYPE=Release -DUSE_NUMA=OFF -DINTERN_BUILD_MOBILE=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_PREFIX_PATH=`pwd`/.. -DPYTHON_EXECUTABLE=/usr/bin/python3 -DFXDIV_SOURCE_DIR=`pwd`/../third_party/FXdiv -DPSIMD_SOURCE_DIR=`pwd`/../third_party/psimd ..
+        emcmake cmake -DCMAKE_BUILD_TYPE=Release -DUSE_STATIC_DISPATCH=ON -DUSE_NUMA=OFF -DINTERN_BUILD_MOBILE=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_PREFIX_PATH=`pwd`/.. -DPYTHON_EXECUTABLE=/usr/bin/python3 -DFXDIV_SOURCE_DIR=`pwd`/../third_party/FXdiv -DPSIMD_SOURCE_DIR=`pwd`/../third_party/psimd ..
     - name: Build
       run: |
         source emsdk/emsdk_env.sh
         cd pytorch/build
         emmake make
+	mkdir dest
+        emmake make install DESTDIR=`pwd`/dest
+    - name: Test
+      run: |
+        source emsdk/emsdk_env.sh
+        emcc test.cpp -Lpytorch/build/dest/usr/local/lib -lcpuinfo -ltorch_cpu -ltorch -lc10 -lclog -leigen_blas -lfmt -lpthreadpool -Ipytorch/build/dest/usr/local/include  -Ipytorch/build/dest/usr/local/include/torch/csrc/api/include -s DISABLE_EXCEPTION_CATCHING=0 -Wno-parentheses  pytorch/third_party/cpuinfo/src/emscripten/init.c -Ipytorch/third_party/cpuinfo/src
+	node a.out.js
