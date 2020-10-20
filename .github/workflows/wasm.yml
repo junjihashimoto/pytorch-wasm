@@ -42,5 +42,5 @@ jobs:
     - name: Test
       run: |
         source emsdk/emsdk_env.sh
-        emcc test.cpp -Lpytorch/build/dest/usr/local/lib -lcpuinfo -ltorch_cpu -ltorch -lc10 -lclog -leigen_blas -lfmt -lpthreadpool -Ipytorch/build/dest/usr/local/include  -Ipytorch/build/dest/usr/local/include/torch/csrc/api/include -s DISABLE_EXCEPTION_CATCHING=0 -Wno-parentheses  pytorch/third_party/cpuinfo/src/emscripten/init.c -Ipytorch/third_party/cpuinfo/src
+        emcc test.cpp -Lpytorch/build/dest/usr/local/lib -lcpuinfo -ltorch_cpu -ltorch -lc10 -lclog -leigen_blas -lpthreadpool -Ipytorch/build/dest/usr/local/include  -Ipytorch/build/dest/usr/local/include/torch/csrc/api/include -s DISABLE_EXCEPTION_CATCHING=0 -Wno-parentheses  pytorch/third_party/cpuinfo/src/emscripten/init.c -Ipytorch/third_party/cpuinfo/src
         node a.out.js
